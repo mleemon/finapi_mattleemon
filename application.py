@@ -1,3 +1,4 @@
+import time
 from flask import Flask, request, jsonify
 import os
 from azure.storage.blob import BlobServiceClient
@@ -103,3 +104,8 @@ def list_csv_reports():
 
     except KeyError as e:
         return jsonify({"error": f"Missing environment variable: {str(e)}"}), 500
+        
+@app.route('/api/slow-endpoint')
+def slow_endpoint():
+    time.sleep(5)
+    return "This was a slow response after 5 seconds"
